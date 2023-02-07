@@ -44,7 +44,7 @@ class Converter(commands.Cog, name="Converter"):
         async with self.sep:
             try:
                 # for some reason it never runs the function if you use an actual executor, so this is a temporary workaround
-                file = await asyncio.wait_for(self.ll.run_in_executor(executor=None, func=func), timeout=30.0)
+                file = await asyncio.wait_for(self.ll.run_in_executor(executor=None, func=func), timeout=45.0)
                 #b2, fn = await asyncio.wait_for(self.ll.run_in_executor(self.pp, func), timeout=30.0)
             except:
                 return None
@@ -83,7 +83,9 @@ class Converter(commands.Cog, name="Converter"):
                 # send the file
                 await ctx.respond(file=discord.File(fp=file, filename=f"C{part}.zip"))
                 return
-
+            else:
+                # If the part is none some unknown error occured
+                await ctx.respond("An error occured, maybe the link or part number is invalid?")
         else:
             # if part is None, we have an invalid url or part number
             await ctx.respond("Invalid link or part number")

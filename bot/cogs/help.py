@@ -88,11 +88,9 @@ class BetterHelpCommand(commands.HelpCommand):
         e = discord.Embed(title=(command.qualified_name or command.name))
         e.add_field(name='Name', value=(command.qualified_name or command.name), inline=False)
         e.add_field(name='Signature', value=(self.signature(command)), inline=False)
-        helpStr = """
-        TODO: add help for setup command"""
-        e.add_field(name='Help', value=helpStr, inline=False)
-        if len(command.aliases) != 0:
-            e.add_field(name='Synonyms', value=('`' + "`, `".join(command.aliases) + '`' or '[no help]'), inline=False)
+        e.add_field(name='Help', value=(command.help or '[no help]'), inline=False)
+        if len(command.aliases) !=  0:
+            e.add_field(name='Synonyms', value=('`'+"`, `".join(command.aliases)+'`' or '[no help]'), inline=False)
         await self.send_embed(e)
 
 

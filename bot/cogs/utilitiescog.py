@@ -88,10 +88,12 @@ class UtilityCommands(commands.Cog, name="utility commands"):
         This command is here to show you what the bot is made of.
         """
         embed = discord.Embed(
-            color=ec.raspberry_red,
+            color=ec.blood_orange,
             title="About EasyEDA2KiCAD",
-            description="""TODO description
-                  This is a fork of the another bot made by ThatRedKite available [here](https://github.com/ThatRedKite/thatkitebot).
+            description="""
+                This bot is made to convert EasyEDA PCB files to KiCAD PCB files. Just run the `convert` command and provide an LCSC link or part numeber to get it converted.
+                The source code is available on [GitHub](https://github.com/diminDDL/discordEasyEDA2KiCAD/).
+                This is a fork of the another bot made by ThatRedKite available [here](https://github.com/ThatRedKite/thatkitebot).
                 """
         )
         try:
@@ -107,36 +109,27 @@ class UtilityCommands(commands.Cog, name="utility commands"):
             "laserpup":"<@357258808105500674>",
             "woo200":"<@881362093427814440>"
         }
-        jsonData = await _contributorjson(self.bot.aiohttp_session)
-        # get a list of "login" field values from json string variable jsonData
-        authorlist = [x["login"] for x in jsonData]
-        # if a username contains [bot] remove it from the list
-        authorlist = [x for x in authorlist if not x.lower().__contains__("bot")]
-        # need only first 5 contributors in authorlist
-        authorlist = authorlist[:5]
-        embedStr = ""
-        for i in authorlist:
-            if i in authordict:
-                embedStr += f"{authordict[i]}\n"
-            else:
-                embedStr += f"{i}\n"
-        embedStr += "and other [contributors](https://github.com/diminDDL/discordEasyEDA2KiCAD/graphs/contributors)"    
-        embed.add_field(
-            name="Authors",
-            value=embedStr
-        )
-        embed.add_field(
-            name="libraries used",
-            inline=False,
-            value="""
-            [pycord](https://github.com/Pycord-Development/pycord)
-            [aiohttp](https://github.com/aio-libs/aiohttp)
-            [psutil](https://github.com/giampaolo/psutil)
-            [si_prefix](https://github.com/cfobel/si-prefix)
-            [feedparser](https://github.com/kurtmckee/feedparser)
-            """
-        )
-
+        try:
+            jsonData = await _contributorjson(self.bot.aiohttp_session)
+            # get a list of "login" field values from json string variable jsonData
+            authorlist = [x["login"] for x in jsonData]
+            # if a username contains [bot] remove it from the list
+            authorlist = [x for x in authorlist if not x.lower().__contains__("bot")]
+            # need only first 5 contributors in authorlist
+            authorlist = authorlist[:5]
+            embedStr = ""
+            for i in authorlist:
+                if i in authordict:
+                    embedStr += f"{authordict[i]}\n"
+                else:
+                    embedStr += f"{i}\n"
+            embedStr += "and other [contributors](https://github.com/diminDDL/discordEasyEDA2KiCAD/graphs/contributors)"    
+            embed.add_field(
+                name="Authors",
+                value=embedStr
+            )
+        except:
+            pass
         embed.set_footer(text="EasyEDA2KiCAD v{}".format(self.bot.version))
 
         await ctx.respond(embed=embed)
