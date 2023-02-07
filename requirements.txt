@@ -1,0 +1,5 @@
+aiohttp
+requests
+psutil
+si-prefix
+Click

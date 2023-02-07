@@ -1,0 +1,14 @@
+# Based on https://github.com/ThatRedKite/thatkitebot/
+services:
+  converter:
+    build:  .
+    volumes:
+      - ./bot/:/app/bot
+      - ./data/:/app/data/
+    tmpfs:
+      - /tmp/bot
+    restart:  "unless-stopped"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: bash -c "cd /app/ && python3 -m bot"
+

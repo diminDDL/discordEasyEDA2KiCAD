@@ -127,3 +127,15 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#settings file
+*.json
+data/*.yml
+# IDEs
+.idea
+.vscode
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+#DB
+data/redis
