@@ -74,6 +74,7 @@ class Converter(commands.Cog, name="Converter"):
             except:
                 # if we can't convert it to an int, it is not a valid part number
                 await ctx.respond("Invalid link or part number")
+                return
 
             # get the footprint
             file = await self.conv_worker(functools.partial(self.get_footprint, part), f"C{part}")
@@ -81,10 +82,13 @@ class Converter(commands.Cog, name="Converter"):
             if file is not None:
                 # send the file
                 await ctx.respond(file=discord.File(fp=file, filename=f"C{part}.zip"))
+                return
 
         else:
             # if part is None, we have an invalid url or part number
             await ctx.respond("Invalid link or part number")
+            return
+        await ctx.respond("An error occured, maybe the link or part number is invalid?")
 
 
 def setup(bot):
